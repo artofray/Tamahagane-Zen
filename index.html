@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenCombat - Hybrid Fitness & Self Defense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes rift-open {
+            0% { transform: scaleX(0); opacity: 0; box-shadow: 0 0 0px orange; }
+            50% { transform: scaleX(1.05); opacity: 1; box-shadow: 0 0 50px orange; }
+            100% { transform: scaleX(1); opacity: 1; box-shadow: 0 0 20px orange; }
+        }
+        .animate-rift {
+            animation: rift-open 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-4px, -4px); }
+            20%, 40%, 60%, 80% { transform: translate(4px, 4px); }
+        }
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes glitch {
+          0% { clip: rect(44px, 9999px, 56px, 0); }
+          5% { clip: rect(12px, 9999px, 85px, 0); }
+          10% { clip: rect(67px, 9999px, 34px, 0); }
+          15% { clip: rect(32px, 9999px, 88px, 0); }
+          20% { clip: rect(98px, 9999px, 12px, 0); }
+          25% { clip: rect(45px, 9999px, 76px, 0); }
+          100% { clip: rect(44px, 9999px, 56px, 0); }
+        }
+        .glitch-text::before {
+          content: attr(data-text);
+          position: absolute;
+          left: -2px;
+          text-shadow: 2px 0 red;
+          top: 0;
+          color: white;
+          background: #0f172a;
+          overflow: hidden;
+          clip: rect(0, 900px, 0, 0);
+          animation: glitch 3s infinite linear alternate-reverse;
+        }
+        .glitch-text::after {
+          content: attr(data-text);
+          position: absolute;
+          left: 2px;
+          text-shadow: -2px 0 blue;
+          top: 0;
+          color: white;
+          background: #0f172a;
+          overflow: hidden;
+          clip: rect(0, 900px, 0, 0);
+          animation: glitch 2s infinite linear alternate-reverse;
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>

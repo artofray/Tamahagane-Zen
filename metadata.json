@@ -1,0 +1,8 @@
+{
+  "name": "Tamahagane Zen",
+  "description": "Forge your flow with Tamahagane Zen—where the jewel steel of samurai tradition meets modern wellness. A fusion of combat arts and mindfulness designed to sharpen your edge.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
