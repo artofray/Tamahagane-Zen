@@ -1,7 +1,6 @@
 
 import React, { useRef, useState } from 'react';
 import { UserProfile, DailyZen } from '../types';
-import { ResponsiveContainer, AreaChart, Area, Tooltip, XAxis } from 'recharts';
 import { Button } from './Button';
 import { Play, Flame, Snowflake, Camera, Loader2, Sword, Zap, Image as ImageIcon, Video, Wand2, Sparkles, BrainCircuit } from 'lucide-react';
 import { generateForgeImage, editForgeImage, generateForgeVideo, analyzeTechnique } from '../services/geminiService';
@@ -77,44 +76,29 @@ export const Dashboard: React.FC<DashboardProps> = ({
     }
   };
 
-  const accentColor = profile.alignment === 'fire' ? 'orange' : 'blue';
-
   return (
     <div className="space-y-10 animate-in fade-in duration-700 max-w-5xl mx-auto">
-      {/* Brand Hero - Clashing Visuals */}
-      <div className="relative group overflow-hidden rounded-[3rem] border border-slate-800 shadow-2xl h-[400px] flex flex-col items-center justify-center bg-slate-950">
-        <div className="absolute inset-0 flex pointer-events-none">
-          <div className="w-1/2 h-full bg-gradient-to-r from-orange-600/20 to-transparent"></div>
-          <div className="w-1/2 h-full bg-gradient-to-l from-blue-600/20 to-transparent"></div>
-        </div>
+      {/* Brand Hero - Clashing Visuals from User Input */}
+      <div className="relative group overflow-hidden rounded-[3rem] border border-slate-800 shadow-2xl h-[450px] flex flex-col items-center justify-center bg-slate-950">
+        <img 
+          src="https://raw.githubusercontent.com/google-gemini/aistudio-frame/main/examples/assets/iron_sharpens_iron.png" 
+          alt="Iron Sharpens Iron" 
+          className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-[10s] ease-linear"
+          onError={(e) => {
+            // Fallback to the user's base64/image if external link fails
+            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&q=80';
+          }}
+        />
         
-        {/* Diamond Shard Particles Effect (Simulated with div decoration) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-           <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rotate-45 animate-pulse"></div>
-           <div className="absolute top-3/4 left-1/3 w-3 h-3 bg-blue-400 rotate-12 animate-bounce"></div>
-           <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-orange-400 -rotate-45 animate-pulse"></div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/20 via-transparent to-slate-950"></div>
 
-        <div className="relative z-10 p-12 text-center space-y-6">
-          <div className="flex items-center justify-center gap-12 mb-2">
-            <div className="relative">
-              <Flame className="text-orange-500 animate-pulse" size={80} />
-              <div className="absolute inset-0 blur-2xl bg-orange-500/20"></div>
-            </div>
-            <div className="h-24 w-px bg-slate-800 rotate-12"></div>
-            <div className="relative">
-              <Snowflake className="text-blue-500 animate-pulse" size={80} />
-              <div className="absolute inset-0 blur-2xl bg-blue-500/20"></div>
-            </div>
-          </div>
-          <div className="space-y-2">
-            <h1 className="text-5xl md:text-7xl font-black font-orbitron tracking-tighter leading-none text-white drop-shadow-2xl">
-              IRON SHARPENS <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-blue-400">IRON</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-bold text-slate-400 tracking-[0.4em] uppercase italic">
-              We Rise Together
-            </p>
-          </div>
+        <div className="relative z-10 p-12 text-center space-y-4">
+           {/* Minimal overlay branding since image has text */}
+           <div className="flex items-center justify-center gap-6 mb-4">
+              <Flame className="text-orange-500 animate-pulse" size={48} />
+              <div className="h-12 w-px bg-white/20"></div>
+              <Snowflake className="text-blue-500 animate-pulse" size={48} />
+           </div>
         </div>
       </div>
 
@@ -152,7 +136,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </div>
             <div className="space-y-4">
               <textarea 
-                placeholder="Declare your vision to the forge master (e.g. 'A samurai meditating under a frozen waterfall')..."
+                placeholder="Declare your vision to the forge master..."
                 className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-6 text-sm min-h-[120px] outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-slate-200 placeholder:text-slate-600"
                 value={mediaPrompt}
                 onChange={e => setMediaPrompt(e.target.value)}

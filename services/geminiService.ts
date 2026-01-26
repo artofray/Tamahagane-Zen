@@ -4,6 +4,27 @@ import { UserProfile, WorkoutSession, DailyZen, SearchResult } from "../types";
 
 const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
+const TAI_CHI_24_FORMS = [
+  "Commencing", "Part the Wild Horse's Mane", "White Crane Spreads Wings", "Brush Knee and Twist Step",
+  "Playing the Lute", "Repulse Monkey", "Grasp the Bird's Tail (Left)", "Grasp the Bird's Tail (Right)",
+  "Single Whip", "Wave Hands like Clouds", "High Pat on Horse", "Right Heel Kick",
+  "Strike to Ears with Both Fists", "Turn Body and Left Heel Kick", "Snake Creeps Down (Left)",
+  "Golden Rooster Stands on One Leg (Left)", "Snake Creeps Down (Right)", "Golden Rooster Stands on One Leg (Right)",
+  "Fair Lady Works at Shuttles", "Needle at Sea Bottom", "Fan Through Back", "Turn Body, Deflect, Parry and Punch",
+  "Apparent Close-up", "Cross Hands", "Closing Form"
+];
+
+const TAI_CHI_APPLICATIONS = [
+  { name: "Peng (Ward Off)", direction: "South", trigram: "Heaven", identity: "Creative" },
+  { name: "Lu (Roll Back)", direction: "North", trigram: "Earth", identity: "Receptive" },
+  { name: "Ji (Squeeze Press)", direction: "West", trigram: "Water", identity: "Abysmal" },
+  { name: "An (Push Down)", direction: "East", trigram: "Fire", identity: "Clinging" },
+  { name: "Cai (Pluck)", direction: "Wind" },
+  { name: "Lie (Split)", direction: "Thunder" },
+  { name: "Zhou (Elbow Strike)", direction: "Valley" },
+  { name: "Kao (Shoulder Strike)", direction: "Mountain" }
+];
+
 const PI_RAI_SYSTEM_INSTRUCTION = `
 You are Pi Rai, the floating menace of discipline and Master of the Tamahagane Zen forge. 
 Your personality is inspired by Pai Mei: ruthless, unimpressed by excuses, but providing tough love.
@@ -17,7 +38,13 @@ Your personality is inspired by Pai Mei: ruthless, unimpressed by excuses, but p
 
 export async function getDayRoutine(day: number): Promise<WorkoutSession> {
   const ai = getAI();
-  const prompt = `Generate a JSON exercise list for Day ${day} of a 30-day samurai/fitness hybrid plan. Include drill name, discipline, reps, and a brief description.`;
+  const prompt = `Generate a JSON exercise list for Day ${day} of a 30-day samurai/fitness hybrid plan. 
+  Follow this progression style:
+  - Incorporate Tai Chi 24-Forms like ${TAI_CHI_24_FORMS.slice(0, 5).join(", ")}...
+  - Include specific direct applications: ${TAI_CHI_APPLICATIONS.map(a => a.name).join(", ")}.
+  - Mix with strength: Walking Lunges, Close-Grip Curls, Jump Squats, etc.
+  Include drill name, discipline (Yoga/Tai Chi/Combat/Conditioning), reps/duration, and a brief description. 
+  Maintain a tone of "Iron Sharpens Iron".`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-3-flash-preview',
@@ -53,7 +80,7 @@ export async function getDayRoutine(day: number): Promise<WorkoutSession> {
 
 export async function generateMindfulness(profile: UserProfile): Promise<DailyZen> {
   const ai = getAI();
-  const prompt = `Generate a fast JSON Zen wellness package. Persona: Pi Rai giving tough love. Day ${profile.currentDay}. Include mantra and 3 gratitude suggestions.`;
+  const prompt = `Generate a fast JSON Zen wellness package. Persona: Pi Rai. Mention Tai Chi principles like Peng (Ward Off) or An (Push Down). Day ${profile.currentDay}.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-lite-latest',
@@ -155,10 +182,6 @@ export async function analyzeTechnique(base64Video: string, query: string) {
 }
 
 // Search Grounding Utils
-/**
- * Uses Google Search grounding to find martial arts instructional resources.
- * Always extracts and returns website URLs from grounding chunks as required.
- */
 export async function findTechniqueResources(query: string): Promise<SearchResult[]> {
   const ai = getAI();
   const response = await ai.models.generateContent({
