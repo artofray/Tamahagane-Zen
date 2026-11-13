@@ -2,6 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { UserProfile, DailyZen } from '../types';
 import { Button } from './Button';
+import { PulseCheck } from './PulseCheck';
 import { Play, Flame, Snowflake, Camera, Loader2, Sword, Zap, Image as ImageIcon, Video, Wand2, Sparkles, BrainCircuit } from 'lucide-react';
 import { generateForgeImage, editForgeImage, generateForgeVideo, analyzeTechnique } from '../services/geminiService';
 
@@ -221,6 +222,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
             
             <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFile} />
           </div>
+
+          <PulseCheck />
 
           {zen && (
             <div className={`bg-gradient-to-br from-slate-900 ${profile.alignment === 'fire' ? 'to-orange-600/10 border-orange-500/20' : 'to-blue-600/10 border-blue-500/20'} p-8 rounded-[2rem] border relative overflow-hidden group`}>
